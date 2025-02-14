@@ -8,17 +8,17 @@ def start_scheduler():
     scheduler = BackgroundScheduler()
 
     # Fetch AQI & store in PostgreSQL every 30 minutes
-    scheduler.add_job(store_data_in_postgres, "interval", minutes=1)
+    scheduler.add_job(store_data_in_postgres, "interval", minutes=30)
 
     # Keep Supabase active every 30 minutes
-    scheduler.add_job(keep_database_alive, "interval", minutes=1)
+    scheduler.add_job(keep_database_alive, "interval", minutes=30)
 
     scheduler.start()
     print("✅ Scheduler started! Fetching data & keeping Supabase alive every 30 minutes.")
 
     try:
         while True:
-            time.sleep(6)  # Keep the script running
+            time.sleep(600)  # Keep the script running
     except (KeyboardInterrupt, SystemExit):
         scheduler.shutdown()
         print("Scheduler stopped.")
