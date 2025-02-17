@@ -10,13 +10,11 @@ def store_data_in_postgres():
         return
 
     try:
-        # Connect to PostgreSQL
         conn = psycopg2.connect(
             dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_HOST
         )
         cur = conn.cursor()
 
-        # SQL Insert Query (Updated for multiple cities)
         query = """
         INSERT INTO air_quality (station, city, aqi, pm25, pm10, co, no2, o3, so2, dominentpol, temperature, humidity, wind_speed, pressure, latitude, longitude, timestamp)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -55,6 +53,5 @@ def store_data_in_postgres():
     except Exception as e:
         print(f"❌ Database insert failed: {e}")
 
-# Run the storage function
 if __name__ == "__main__":
     store_data_in_postgres()

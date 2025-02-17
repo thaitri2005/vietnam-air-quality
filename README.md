@@ -44,8 +44,8 @@ cd vietnam-air-quality
 
 ```bash
 python -m venv venv
-source venv/bin/activate
-venv\Scripts\activate     # On Windows
+source venv/bin/activate    # macOS/Linux
+venv\Scripts\activate     # Windows
 pip install -r requirements.txt
 ```
 

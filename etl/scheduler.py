@@ -7,10 +7,8 @@ def start_scheduler():
     """Starts the APScheduler to run tasks every 30 minutes."""
     scheduler = BackgroundScheduler()
 
-    # Fetch AQI & store in PostgreSQL every 30 minutes
     scheduler.add_job(store_data_in_postgres, "interval", minutes=30)
 
-    # Keep Supabase active every 30 minutes
     scheduler.add_job(keep_database_alive, "interval", minutes=30)
 
     scheduler.start()

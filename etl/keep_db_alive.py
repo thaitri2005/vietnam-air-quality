@@ -12,7 +12,7 @@ def keep_database_alive():
             port=DB_PORT
         )
         cur = conn.cursor()
-        cur.execute("SELECT 1;")  # Simple query to keep DB active
+        cur.execute("SELECT 1;")  # Keep DB active
         conn.commit()
         cur.close()
         conn.close()

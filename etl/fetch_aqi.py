@@ -5,10 +5,9 @@ import os
 from datetime import datetime, timezone
 from config import API_TOKEN
 
-# Define target cities
 CITIES = ["hanoi", "da-nang", "ho-chi-minh-city"]
 
-# Set up local Data Lake directory
+# Local Data Lake directory
 RAW_DATA_DIR = "data_lake/raw_data"
 os.makedirs(RAW_DATA_DIR, exist_ok=True)
 
@@ -47,10 +46,9 @@ def fetch_aqi_data():
             print(f"❌ API Error for {city}: {data.get('message', 'Unknown error')}")
             continue
 
-        # 🔥 **Save raw API data to Data Lake before processing**
+        # Save raw API data to Data Lake before processing
         save_to_data_lake(city, data)
 
-        # Extract relevant fields safely
         city_data = data.get("data", {})
         station_info = city_data.get("city", {})
         iaqi = city_data.get("iaqi", {})
@@ -59,7 +57,7 @@ def fetch_aqi_data():
         geo = station_info.get("geo", [None, None])
         aqi = safe_float(city_data.get("aqi"))
 
-        # Extract pollutants & weather data safely
+        # Extract pollutants & weather data
         pm25 = safe_float(iaqi.get("pm25", {}).get("v"))
         pm10 = safe_float(iaqi.get("pm10", {}).get("v"))
         co = safe_float(iaqi.get("co", {}).get("v"))
@@ -95,7 +93,7 @@ def fetch_aqi_data():
             "no2": no2,
             "o3": o3,
             "so2": so2,
-            "dominentpol": dominentpol,  # Fixed issue
+            "dominentpol": dominentpol,  
             "temperature": temperature,
             "humidity": humidity,
             "wind_speed": wind_speed,
@@ -107,7 +105,6 @@ def fetch_aqi_data():
 
     return pd.DataFrame(all_data) if all_data else None
 
-# Run and check fetching
 if __name__ == "__main__":
     df = fetch_aqi_data()
     if df is not None:
